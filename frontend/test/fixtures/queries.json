@@ -1,0 +1,173 @@
+{
+    "query1": {
+        "WHERE": {
+            "IS": {
+                "courses_dept": "cpsc"
+            }
+        },
+        "OPTIONS": {
+            "COLUMNS": [
+                "courses_dept",
+                "courses_id"
+            ],
+            "ORDER": "courses_id"
+        }
+    },
+    "query2": {
+        "WHERE": {
+        },
+        "OPTIONS": {
+            "COLUMNS": [
+                "courses_dept"
+            ]
+        },
+        "TRANSFORMATIONS": {
+            "GROUP": [
+                "courses_dept"
+            ],
+            "APPLY": []
+        }
+    },
+    "query3": {
+        "WHERE": {
+            "OR": [
+                {
+                    "NOT": {
+                        "IS": {
+                            "courses_instructor": "elisa"
+                        }
+                    }
+                },
+                {
+                    "IS": {
+                        "courses_dept": "cpsc"
+                    }
+                },
+                {
+                    "NOT": {
+                        "EQ": {
+                            "courses_pass": 80
+                        }
+                    }
+                }
+            ]
+        },
+        "OPTIONS": {
+            "COLUMNS": [
+                "courses_dept",
+                "overallMax",
+                "overallMin"
+            ],
+            "ORDER": {
+                "dir": "DOWN",
+                "keys": [
+                    "overallMax"
+                ]
+            }
+        },
+        "TRANSFORMATIONS": {
+            "GROUP": [
+                "courses_dept"
+            ],
+            "APPLY": [
+                {
+                    "overallMax": {
+                        "MAX": "courses_pass"
+                    }
+                },
+                {
+                    "overallMin": {
+                        "MIN": "courses_fail"
+                    }
+                }
+            ]
+        }
+    },
+    "query4": {
+        "WHERE": {
+            "NOT": {
+                "OR": [
+                    {
+                        "IS": {
+                            "rooms_shortname": "MCML"
+                        }
+                    },
+                    {
+                        "NOT": {
+                            "EQ": {
+                                "rooms_seats": 8
+                            }
+                        }
+                    },
+                    {
+                        "GT": {
+                            "rooms_lat": 49.5
+                        }
+                    }
+                ]
+            }
+        },
+        "OPTIONS": {
+            "COLUMNS": [
+                "rooms_address",
+                "rooms_lat",
+                "rooms_lon",
+                "rooms_number"
+            ],
+            "ORDER": {
+                "dir": "UP",
+                "keys": [
+                    "rooms_number"
+                ]
+            }
+        }
+    },
+    "query5": {
+        "WHERE": {
+            "AND": [
+                {
+                    "LT": {
+                        "rooms_lon": -123.25
+                    }
+                },
+                {
+                    "NOT": {
+                        "GT": {
+                            "rooms_seats": 40
+                        }
+                    }
+                }
+            ]
+        },
+        "OPTIONS": {
+            "COLUMNS": [
+                "rooms_shortname",
+                "allSeats",
+                "aveLat"
+            ],
+            "ORDER": {
+                "dir": "UP",
+                "keys": [
+                    "allSeats"
+                ]
+            }
+        },
+        "TRANSFORMATIONS": {
+            "GROUP": [
+                "rooms_shortname"
+            ],
+            "APPLY": [
+                {
+                    "allSeats": {
+                        "SUM": "rooms_seats"
+                    }
+                },
+                {
+                    "aveLat": {
+                        "AVG": "rooms_lat"
+                    }
+                }
+            ]
+        }
+    }
+}

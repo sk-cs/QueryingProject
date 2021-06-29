@@ -1,0 +1,7 @@
+{
+    "query1": "simple query IS comparison for department with two columns and old order syntax",
+    "query2": "valid courses query, column and group is selected",
+    "query3": "valid courses query, have where, options, transformation",
+    "query4": "valid room query, have where, options",
+    "query5": "valid room query, have where, options, transformation"
+}
